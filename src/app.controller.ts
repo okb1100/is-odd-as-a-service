@@ -14,7 +14,7 @@ export class AppController {
     let number;
     number = Number(num);
     if (isNaN(number)) {
-      number = wordsToNumbers(num);
+      number = Number(wordsToNumbers(num));
     }
     if (isNaN(number)) {
       number = 0;
