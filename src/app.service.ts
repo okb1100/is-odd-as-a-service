@@ -4,7 +4,7 @@ const isOdd = require('is-odd');
 
 @Injectable()
 export class AppService {
-  getIsOdd(number: number): boolean {
+  async getIsOdd(number: number): Promise<boolean> {
     return isOdd(number);
   }
 }
