@@ -1,7 +1,6 @@
 import { Controller, Get, Query } from '@nestjs/common';
-import to from 'await-to-js';
 import { AppService } from './app.service';
-
+import wordsToNumbers from 'words-to-numbers';
 class IsOddResponse {
   result: boolean;
 }
@@ -11,9 +10,16 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get('/is-odd')
-  async isOddHandler(@Query('number') number: string): Promise<IsOddResponse> {
-    // because why not
-    const [err, isOdd] = await to(this.appService.getIsOdd(Number(number)));
-    return { result: err ? false : isOdd };
+  async isOddHandler(@Query('number') num: string): Promise<IsOddResponse> {
+    let number;
+    number = Number(num);
+    if (isNaN(number)) {
+      number = wordsToNumbers(num);
+    }
+    if (isNaN(number)) {
+      number = 0;
+    }
+    const isOdd = await this.appService.getIsOdd(number);
+    return { result: isOdd };
   }
 }
